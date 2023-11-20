@@ -1,0 +1,7 @@
+.text {
+    text-transform: uppercase;
+    max-width: 9rem;
+    color: rgba(32, 31, 31, 0.8);
+    padding-top: 2rem;
+  }
+  
