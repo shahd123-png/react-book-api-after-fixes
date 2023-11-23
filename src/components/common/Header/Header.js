@@ -1,4 +1,4 @@
-import React, { Fragment,useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Link,
   Typography,
@@ -10,7 +10,7 @@ import {
   Divider,
   TextField,
 } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -40,11 +40,14 @@ const HeaderComponent = () => {
   const [term, setTerm] = useState("");
   const navigate = useNavigate();
 
-
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
     setTerm(searchTerm);
-    navigate(`/search-results?term=${searchTerm}`);
+    if (searchTerm.trim() === "") {
+      navigate("/");
+    } else {
+      navigate(`/search-results?term=${searchTerm}`);
+    }
   };
 
   return (
