@@ -20,7 +20,6 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MenuIcon from "@mui/icons-material/Menu";
 import ImagesComponent from "../../../assets/images/ImagesComponent/ImagesComponent";
 import style from "./Header.module.css";
-import SearchPage from "../../../containers/SearchPage/SearchPage";
 
 const links = [
   { label: "Privacy policy", href: "/" },
@@ -46,7 +45,6 @@ const HeaderComponent = () => {
     const searchTerm = e.target.value;
     setTerm(searchTerm);
     navigate(`/search-results?term=${searchTerm}`);
-
   };
 
   return (

@@ -6,10 +6,11 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ImagesComponent from "../../../assets/images/ImagesComponent/ImagesComponent";
 
 const CardComponent = ({ item }) => {
-  const { title, authors, imageLinks } = item.volumeInfo;
-  const BookTitle = title || "Not known";
-  const Author = authors && authors.length > 0 ? authors[0] : "Unknown Author";
-  const Thumbnail = imageLinks ? imageLinks.smallThumbnail : ImagesComponent.book1;
+  const { title, authors, imageLinks } = item?.volumeInfo || {};
+  const BookTitle = title?.toString() || "Not known";
+  const Author = (authors?.length || 0) > 0 ? authors[0] : "Unknown Author";
+  const Thumbnail = imageLinks?.smallThumbnail || ImagesComponent.book1;
+  
 
   return (
     <Card className={style.card} sx={{ border: 0, boxShadow: 0 }}>
@@ -33,8 +34,7 @@ const CardComponent = ({ item }) => {
           <Button
             className={style.buttonStyle}
             variant="contained"
-            startIcon={<ShoppingCartIcon />}
-          >
+            startIcon={<ShoppingCartIcon />}>
             Add to cart
           </Button>
         </Stack>

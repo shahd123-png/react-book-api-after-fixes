@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "../containers/Home/HomePage";
 import BookDetailsPage from "../containers/BookDetails/BookDetailsPage";
 import SearchResultsPage from "../containers/SearchPage/SearchReasultPage";
-import SearchPage from "../containers/SearchPage/SearchPage";
 const AppRouter = () => {
   return (
     <Routes>

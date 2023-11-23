@@ -1,6 +1,4 @@
 import React from "react";
-import ImagesComponent from "../../assets/images/ImagesComponent/ImagesComponent";
-
 const BookImage = {
   width: "314.436px",
   height: "444.617px",

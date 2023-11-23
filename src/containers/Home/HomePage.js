@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Stack, Grid, Typography } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import StarRateIcon from "@mui/icons-material/StarRate";
@@ -7,26 +8,28 @@ import ButtonOutlined from "../../components/shared/buttonOutlined/ButtonOutline
 import BookDetailsApi from "../../components/home/BookDetailsApi";
 import ButtonFilled from "../../components/shared/buttonFilled/ButtonFilled";
 import BookImageApi from "../../components/home/BookImageApi";
-import style from "./HomePage.module.css";
 import SeconedSection from "../../components/home/SeconedSection";
-import { Link } from "react-router-dom";
 import ImagesComponent from "../../assets/images/ImagesComponent/ImagesComponent";
 import SwiperComponent from "../../components/common/swiper/SwiperComponent";
+import style from "./HomePage.module.css";
+
 const HomePage = () => {
   const [bookData, setBookData] = useState([]);
+  const { title, description, imageLinks } = bookData?.volumeInfo|| {};
+  const titleBook = title?.toString() || "not found";
+  const descriptionApi = description?.trim() || "not found";
+  const imgApi = imageLinks?.smallThumbnail || ImagesComponent.GallarySeconedPageImage1;
+
   useEffect(() => {
     const fetchRandomBook = async () => {
       try {
-        const response = await fetch(
-          "https://www.googleapis.com/books/v1/volumes?q=fantasy"
-        );
+        const booksApi = process.env.REACT_APP_BOOKS_API;
+        const response = await fetch(`${booksApi}?q=fantasy`);
         const data = await response.json();
 
-        if (data.items.length > 0) {
+        if (data?.items?.length > 0) {
           const randomIndex = Math.floor(Math.random() * data.items.length);
           setBookData(data.items[7]);
-        } else {
-          setBookData([]);
         }
       } catch (error) {
         console.error("Error fetching book data:", error);
@@ -36,11 +39,6 @@ const HomePage = () => {
     fetchRandomBook();
   }, []);
 
-  const { title, description, imageLinks } = bookData?.volumeInfo || {};
-  const titleBook = title || "not found";
-  const descriptionApi = description || "not found";
-  const imgApi =
-    imageLinks?.smallThumbnail || ImagesComponent.GallarySeconedPageImage1;
   return (
     <Fragment>
       <Grid
@@ -67,7 +65,9 @@ const HomePage = () => {
             <ButtonOutlined color="customColor.main" padding={"10.014px"}>
               Author of August
             </ButtonOutlined>
+
             <BookDetailsApi title={titleBook} description={descriptionApi} />
+
             <Link to={`/Seconed-Page/${bookData.id}`}>
               <ButtonFilled padding={"12.017px 32.044px"}>
                 View his books

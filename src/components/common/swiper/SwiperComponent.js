@@ -17,12 +17,11 @@ const SwiperComponent = () => {
     const fetchSwiperData = async () => {
       try {
         const result = await fetchDataFromApi();
-        if (result.items && result.items.length > 0)
-         {
-        setData(result.items);
-      
-      }
-            } catch (error) {
+        
+        if (result?.items?.length > 0) {
+          setData(result.items);
+        }
+      } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
@@ -41,9 +40,9 @@ const SwiperComponent = () => {
         spaceBetween={15}
         slidesPerView={4}
       >
-        {data.map((item) => (
-          <SwiperSlide  key={item.id}>
-            <CardComponent item ={item}/>
+        {data?.map((item) => (
+          <SwiperSlide key={item.id}>
+            <CardComponent item={item} />
           </SwiperSlide>
         ))}
       </Swiper>

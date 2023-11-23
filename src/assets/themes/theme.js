@@ -10,7 +10,6 @@ const theme = createTheme({
     },
     customColor: {
       main: "rgba(198, 137, 198, 1)",
-
       black: "#000000",
     },
 

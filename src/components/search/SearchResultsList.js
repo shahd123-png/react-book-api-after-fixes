@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Typography ,Stack, Grid} from '@mui/material';
-import ImagesComponent from '../../assets/images/ImagesComponent/ImagesComponent'; // Update this path
+import { Box, Typography ,Stack} from '@mui/material';
+import ImagesComponent from '../../assets/images/ImagesComponent/ImagesComponent';
 
 const BoxSearchResult = {
   display: 'grid',
@@ -15,35 +15,40 @@ const imgSize = {
   width: '15rem',
 };
 
-const SearchResultsLists = ({ results }) => {
-  return (
-    <Box style={BoxSearchResult} >
-      {results.map((result, index) => {
-        const {
-          volumeInfo: {
+  const SearchResultsLists = ({ results }) => {
+    if (!results || results.length === 0) {
+      return <Typography variant="h6">No results found.</Typography>;
+    }
+  
+    return (
+      <Box style={BoxSearchResult}>
+        {results.map((result) => {
+          const {
             title,
             authors,
             publisher,
-            imageLinks: { thumbnail } = ImagesComponent.bookCarouselCardPic,
-          } = {},
-        } = result;
-
-        const authorApi = authors ? authors[0] : 'Author not found';
-        const publisherApi = publisher || 'Publisher not found';
-
-        return (
-          <Stack direction={'row'} spacing={3} key={index} >
-            <img style={imgSize} src={thumbnail} alt={title} />
-            <Stack spacing={"2rem"}>
-              <Typography variant="h4">{title}</Typography>
-              <Typography>Author: {authorApi}</Typography>
-              <Typography>Publisher:{publisherApi}</Typography>
+            imageLinks,
+          } = result?.volumeInfo || {};
+  
+          const titleBookApi = title?.toString() || "not found";
+          const imgApi = imageLinks?.smallThumbnail || ImagesComponent.GallarySeconedPageImage1;
+          const authorApi = (authors?.length || 0) > 0 ? authors[0] : "Unknown Author";
+          const publisherApi = publisher?.toString() || "Not Found";
+  
+          return (
+            <Stack direction={'row'} spacing={3} key={result.id}>
+              <img style={imgSize} src={imgApi} alt={title} />
+              <Stack spacing={"2rem"}>
+                <Typography variant="h4">{titleBookApi}</Typography>
+                <Typography>Author: {authorApi}</Typography>
+                <Typography>Publisher: {publisherApi}</Typography>
+              </Stack>
             </Stack>
-          </Stack>
-        );
-      })}
-    </Box>
-  );
-};
-
-export default SearchResultsLists;
+          );
+        })}
+      </Box>
+    );
+  };
+  
+  export default SearchResultsLists;
+  

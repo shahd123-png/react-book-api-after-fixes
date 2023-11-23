@@ -14,7 +14,7 @@ const SeconedPageBookDetails =({ title, author,description }) => {
         <Typography variant="h3">{title}</Typography>
         <Typography variant='h5'>{author}</Typography>
         <Typography variant='h4'>12.40$</Typography>
-        <Typography style={TypographyDescription} variant="subtitle1">{description}</Typography>
+        <Typography dangerouslySetInnerHTML={{ __html: description }} style={TypographyDescription} variant="subtitle1"></Typography>
       </Stack>
     </Box>
   );

@@ -6,8 +6,8 @@ const iconSize = {
   width: '3rem',
   height: '3rem'
 };
+
 const SeconedSection = ({ icon, text }) => {
-  
   return (
     <Fragment>
     {React.cloneElement(icon, { style: iconSize })}

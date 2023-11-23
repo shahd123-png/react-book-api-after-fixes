@@ -5,12 +5,14 @@ export const fetchDataFromApi = async () => {
   try {
     const response = await axios.get(api, {
       params: {
-        q: 'fantasy',
+        q: 'love',
         maxResults: 16,
       },
     });
     return response.data;
-  } catch (error) {
+
+  } 
+  catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
