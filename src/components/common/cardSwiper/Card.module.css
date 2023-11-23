@@ -1,0 +1,29 @@
+
+.buttonStyle {
+    text-transform: none;
+    font-weight: 500;
+    border-radius: 2px;
+    width: 260px;
+    height: 48px;
+  }
+  .card {
+    width: 292.25px;
+    
+  }
+
+  .titleStyle {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .imageFixedSizeCard {
+    width: 260.25px;
+    height: 420.38px;
+  }
+  
+  .cardCustomized {
+    border: none;
+    box-shadow: none;
+  }
+  
