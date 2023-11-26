@@ -5,8 +5,8 @@ const BookImage = {
   borderRadius: "10px",
 };
 
-const SeconedPageImageApi = ({imgApi}) => {
+const Image = ({imgApi}) => {
   return <img src={imgApi} alt="hi" style={BookImage} />;
 };
 
-export default SeconedPageImageApi;
+export default Image;

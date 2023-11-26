@@ -7,7 +7,7 @@ const iconSize = {
   height: '3rem'
 };
 
-const SeconedSection = ({ icon, text }) => {
+const Beneficts = ({ icon, text }) => {
   return (
     <Fragment>
     {React.cloneElement(icon, { style: iconSize })}
@@ -16,8 +16,8 @@ const SeconedSection = ({ icon, text }) => {
   );
 };
 
-SeconedSection.propTypes = {
+Beneficts.propTypes = {
   icon: PropTypes.node.isRequired, 
   text: PropTypes.string.isRequired,
 };
-export default SeconedSection;
+export default Beneficts;

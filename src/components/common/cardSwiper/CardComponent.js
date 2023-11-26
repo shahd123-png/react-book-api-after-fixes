@@ -3,13 +3,13 @@ import { Button, Card, CardContent, Stack, Typography } from "@mui/material";
 import style from "./Card.module.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import ImagesComponent from "../../../assets/images/ImagesComponent/ImagesComponent";
+import ImagesComponent from "../../../assets/images/ImagesComponent/Index";
 
 const CardComponent = ({ item }) => {
   const { title, authors, imageLinks } = item?.volumeInfo || {};
   const BookTitle = title?.toString() || "Not known";
   const Author = (authors?.length || 0) > 0 ? authors[0] : "Unknown Author";
-  const Thumbnail = imageLinks?.smallThumbnail || ImagesComponent.book1;
+  const Thumbnail = imageLinks?.smallThumbnail || ImagesComponent.bookCarouselCard;
   
 
   return (
@@ -28,7 +28,7 @@ const CardComponent = ({ item }) => {
 
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="h4">$12.06</Typography>
-            <FavoriteBorderIcon color="primary" />
+            <FavoriteBorderIcon color="primary"/>
           </Stack>
 
           <Button

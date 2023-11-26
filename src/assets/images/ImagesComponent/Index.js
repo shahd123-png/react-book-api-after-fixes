@@ -7,13 +7,13 @@ import GallarySeconedPageImage4 from '../ImagesJPG/GallarySeconedPageImage4.jpeg
 import HomePageNocOgniaBookImage from '../ImagesJPG/noc-ognia-book.jpg'
 
 const ImagesComponent = {
-  bookCarouselCardPic : bookCarouselCard,
-  bookIconHeader : bookIconHeader,
-  HomePageNocOgniaBookImage: HomePageNocOgniaBookImage,
-  GallarySeconedPageImage1: GallarySeconedPageImage1,
-  GallarySeconedPageImage2 : GallarySeconedPageImage2,
-  GallarySeconedPageImage3: GallarySeconedPageImage3,
-  GallarySeconedPageImage4: GallarySeconedPageImage4,
+  bookCarouselCard,
+  bookIconHeader,
+  HomePageNocOgniaBookImage,
+  GallarySeconedPageImage1,
+  GallarySeconedPageImage2,
+  GallarySeconedPageImage3,
+  GallarySeconedPageImage4,
   
 };
 
