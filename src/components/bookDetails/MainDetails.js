@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Typography, Box ,Stack} from "@mui/material";
 
-
 const TypographyDescription = {
     maxWidth: "544px"
   }
 
-const SeconedPageBookDetails =({ title, author,description }) => {
+const MainDetails =({ title, author,description }) => {
   return (
     <Box>
       <Stack gap={'2rem'}>
@@ -20,11 +19,11 @@ const SeconedPageBookDetails =({ title, author,description }) => {
   );
 };
 
-SeconedPageBookDetails.propTypes = {
+MainDetails.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 };
 
 
-export default SeconedPageBookDetails;
+export default MainDetails;

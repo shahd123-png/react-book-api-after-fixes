@@ -8,27 +8,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./Swiper.css";
 import CardComponent from "../cardSwiper/CardComponent";
-import { fetchDataFromApi } from "../../../utilities/ApiFetch";
 
-const SwiperComponent = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchSwiperData = async () => {
-      try {
-        const result = await fetchDataFromApi();
-        
-        if (result?.items?.length > 0) {
-          setData(result.items);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchSwiperData();
-  }, []);
-
+const SwiperComponent = ({ bookDataSwiper }) => {
   return (
     <Box>
       <Swiper
@@ -38,13 +19,17 @@ const SwiperComponent = () => {
           clickable: true,
         }}
         spaceBetween={15}
-        slidesPerView={4}
-      >
-        {data?.map((item) => (
-          <SwiperSlide key={item.id}>
-            <CardComponent item={item} />
-          </SwiperSlide>
-        ))}
+        slidesPerView={4}>
+        {bookDataSwiper.length > 0 ? (
+          bookDataSwiper.map((item) => (
+            <SwiperSlide key={item.id}>
+              <CardComponent item={item} />
+            </SwiperSlide>
+          ))
+        ) : 
+        (
+          <p>No books found</p>
+        )}
       </Swiper>
     </Box>
   );

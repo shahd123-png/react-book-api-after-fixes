@@ -9,17 +9,20 @@ import {
   Stack,
   Divider,
   TextField,
+  Box,
+  Container,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ButtonOutlined from "../../shared/buttonOutlined/ButtonOutlined";
+import ButtonOutlined from "../../common/buttonOutlined/ButtonOutlined";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MenuIcon from "@mui/icons-material/Menu";
-import ImagesComponent from "../../../assets/images/ImagesComponent/ImagesComponent";
+import ImagesComponent from "../../../assets/images/ImagesComponent/Index";
 import style from "./Header.module.css";
+import FetchData from "../../../utilities/SearchPage/FetchData";
 
 const links = [
   { label: "Privacy policy", href: "/" },
@@ -27,7 +30,6 @@ const links = [
   { label: "Shipping", href: "/" },
   { label: "Return", href: "/" },
 ];
-
 const linksSeconedHeder = [
   { label: "The must read", href: "/" },
   { label: "News", href: "/" },
@@ -35,219 +37,187 @@ const linksSeconedHeder = [
   { label: "Plublishs", href: "/" },
   { label: "Subscribe to the newsletter", href: "/" },
 ];
-
 const HeaderComponent = () => {
   const [term, setTerm] = useState("");
-  const navigate = useNavigate();
+  const [searchResults, setSearchResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
-  const handleInputChange = (e) => {
-    const searchTerm = e.target.value;
-    setTerm(searchTerm);
-    if (searchTerm.trim() === "") {
-      navigate("/");
-    } else {
-      navigate(`/search-results?term=${searchTerm}`);
-    }
+  const getTitle = (result) => {
+    const title = result?.volumeInfo?.title;
+    return Array.isArray(title)
+      ? title[0] || "not found"
+      : title?.toString() || "not found";
   };
 
+  const handleInputChange = (e, value) => {
+    setTerm(value);
+  };
   return (
     <Fragment>
       <AppBar
         className={style.header}
         color={"white"}
         sx={{ boxShadow: "none" }}
-        position="fixed"
-      >
-        <Toolbar>
-          <Grid
-            container
+        position="fixed">
+
+
+        <Toolbar sx={{justifyContent : "space-between"}}>
+          <Stack
+            direction={"row"}
             alignItems={"center"}
-            justifyContent={"space-between"}
-            columnSpacing={{ lg: 4, md: 1 }}
-          >
-            <Grid item md={2} sm={3} xs={7}>
-              <Stack
-                direction={"row"}
-                alignItems={"center"}
-                spacing={1}
-                divider={
-                  <Divider
-                    orientation="vertical"
-                    className={style.verticalLine}
-                    flexItem
-                  />
-                }
-              >
-                <Typography variant="p" color={"customColor.black"}>
-                  B-W
-                  <img
-                    className={style.bookImgHeader}
-                    src={ImagesComponent.bookIconHeader}
-                    alt="read book"
-                  />
-                  rld
-                </Typography>
+            spacing={{xs : 1 , sm : 1 , md:1}}
+            divider={
+              <Divider
+                orientation="vertical"
+                className={style.verticalLine}
+                flexItem
+              />}>
+            <Typography variant="p" color={"customColor.black"}>
+              B-W
+              <img
+                className={style.bookImgHeader}
+                src={ImagesComponent.bookIconHeader}
+                alt="read book"
+              />
+              rld
+            </Typography>
 
-                <Typography variant="caption" color="primary" ml={1}>
-                  We love
-                  <br />
-                  books
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item lg={4} md={3} sm={1} xs={3}>
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Hidden lgUp>
-                  <SearchIcon color="grey" />
-                </Hidden>
+            <Typography variant="caption" color="primary" ml={1}>
+              We love
+              <br />
+              books
+            </Typography>
+            </Stack>
 
-                <Hidden lgDown>
+            <Stack alignItems={"flex-end"} flexGrow={{xs : 'none' , sm : 1}} display={{xs : 'flex' , sm : "flex" , md : 'none'}}>
+             <SearchIcon color="grey" /> 
+            </Stack>
+
+          <Stack direction="row" alignItems="center">
+            <Box display={{xs : 'none' , sm : "none" , md : "flex"}}>
+
+              <FetchData term={term} setSearchResults={setSearchResults} />
+              <Autocomplete
+                freeSolo
+                id="search-input"
+                options={searchResults.map((result) => getTitle(result))}
+                renderInput={(params) => (
                   <TextField
-                    placeholder="Type any book here"
+                    {...params}
+                    label="Type any book here"
                     variant="outlined"
                     size="small"
-                    className={style.searchBar}
-                    onChange={handleInputChange}
-                    value={term}
+                    onChange={(e) => handleInputChange(e, e.target.value)}
                     InputProps={{
+                      ...params.InputProps,
                       endAdornment: <SearchIcon color="grey" />,
+                      className: style.searchBar,
+                      style: { width: "376.522px" },
                     }}
                   />
-                </Hidden>
-              </Stack>
-            </Grid>
+                )}
+              />
+            </Box>
+          </Stack>
 
-            <Grid item lg={4} md={1}>
-              <Hidden lgDown>
-                <Stack
-                  direction="row"
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing={3}
-                >
-                  {links.map((link, index) => (
-                    <Link
-                      key={index}
-                      href={link.href}
-                      className={style.linksA}
-                      underline="hover"
-                      variant="plain"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </Stack>
-              </Hidden>
-            </Grid>
-
-            <Hidden lgUp>
-              <Grid item md={3} sm={4} display={{ xs: "none", sm: "flex" }}>
-                <Stack direction="row" justifyContent="flex-end" spacing={2}>
-                  <LocalPhoneIcon color="primary" />
-                  <Typography color="black">+445 87 999 000</Typography>
-                </Stack>
-              </Grid>
-            </Hidden>
-
-            <Hidden smDown>
-              <Grid
-                item
-                md={2}
-                sm={3}
-                sx={{ display: { xs: "none", sm: "flex", md: "flex" } }}
-              >
-                <Stack
-                  direction="row"
-                  alignItems={"center"}
-                  justifyContent={"flex-end"}
-                  p={1}
-                  spacing={2}
-                  divider={
-                    <Divider
-                      orientation="vertical"
-                      className={style.verticalLineForIconsHeader}
-                      flexItem
-                    />
-                  }
-                >
-                  <ShoppingCartIcon color="primary" />
-                  <FavoriteIcon color="primary" />
-                  <PersonIcon color="primary" />
-                </Stack>
-              </Grid>
-            </Hidden>
-
-            <Grid
-              item
-              xs={1}
-              sx={{ display: { xs: "flex", sm: "none", md: "none" } }}
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+            display={{xs : 'none', sm: 'none' , md: "flex"}}
             >
-              <Stack>
-                <ShoppingCartIcon color="primary" />
-              </Stack>
-            </Grid>
+            {links.map((link, index) => (
+              <Link
+                key={index}
+                href={link.href}
+                className={style.linksA}
+                underline="hover"
+                variant="plain"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </Stack>
 
-            <Hidden lgUp>
-              <Grid item md={1} sm={1} xs={1}>
-                <Stack alignItems={"center"}>
-                  <MenuIcon color="primary" />
-                </Stack>
-              </Grid>
-            </Hidden>
-          </Grid>
+          <Stack direction="row" flexGrow={1} justifyContent="flex-end" spacing={2} display={{xs : 'none', sm: 'flex',md : 'none'}}>
+            <LocalPhoneIcon color="primary" />
+            <Typography color="black">+445 87 999 000</Typography>
+          </Stack>
+
+          <Stack
+            direction="row"
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+            p={1}
+            spacing={2}
+            flexGrow={0.1}
+            display={{xs : 'none', sm: 'flex' , md: "flex"}}
+            divider={
+              <Divider
+                orientation="vertical"
+                className={style.verticalLineForIconsHeader}
+                flexItem
+              />
+            }
+          >
+            <ShoppingCartIcon color="primary" />
+            <FavoriteIcon color="primary" />
+            <PersonIcon color="primary" />
+          </Stack>
+
+          
+
+          <Stack spacing={2} direction={"row"} display={{xs : 'flex', sm: 'flex' , md: "none"}} alignItems={"center"}>
+          <Hidden smUp>  <ShoppingCartIcon color="primary" /></Hidden>
+           
+            <MenuIcon color="primary" />
+          </Stack>
         </Toolbar>
       </AppBar>
 
-      <Hidden lgDown>
-        <AppBar
-          className={style.secondHeader}
-          color={"white"}
-          position="relative"
-          sx={{ boxShadow: "none", top: "80px", marginBottom: "8rem" }}
-        >
-          <Toolbar>
-            <Grid
-              container
-              alignItems={"center"}
-              justifyContent={"space-between"}
-              columnSpacing={5}
-            >
-              <Grid item lg={8}>
-                <Stack
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  spacing={3}
-                >
-                  {linksSeconedHeder.map((link, index) => (
-                    <Link
-                      key={index}
-                      href={link.href}
-                      className={style.linksSecondLine}
-                      underline="hover"
-                      variant="h5"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </Stack>
-              </Grid>
 
-              <Grid item lg={2}>
-                <Stack direction="row" justifyContent="flex-end" spacing={2}>
-                  <LocalPhoneIcon color="primary" />
-                  <Typography color="black">+445 87 999 000</Typography>
-                </Stack>
-              </Grid>
-              <Grid item lg={2}>
-                <Stack justifyContent={"center"} alignItems={"flex-end"}>
-                  <ButtonOutlined>Request a call</ButtonOutlined>
-                </Stack>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Hidden>
+      <Hidden mdDown>
+      <AppBar
+      className={style.secondHeader}
+      color={"white"}
+      position="relative"
+      sx={{ boxShadow: "none", top: "80px", marginBottom: "8rem" }}>
+      <Toolbar sx={{justifyContent : "space-between"}} >
+            <Stack
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+              spacing={3}
+            >
+              {linksSeconedHeder.map((link, index) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  className={style.linksSecondLine}
+                  underline="hover"
+                  variant="h5"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </Stack>
+
+            <Stack direction="row" justifyContent="flex-end" spacing={4} alignItems={"center"}>
+            <Box display={"flex"} gap={1} direction ={"row"}> 
+             <LocalPhoneIcon color="primary" />
+             <Typography color="black">+445 87 999 000</Typography>
+            </Box>
+             
+              <ButtonOutlined padding={"12.017px 32.044px"}>Request a call</ButtonOutlined>
+
+            </Stack>
+
+         
+      </Toolbar>
+    </AppBar>
+    </Hidden>
+
     </Fragment>
   );
 };
